@@ -38,6 +38,8 @@ namespace MVC
                 options.ResponseType = "code";
 
                 options.Scope.Add("profile");
+                options.Scope.Add("api1");
+                options.Scope.Add("offline_access");
                 options.GetClaimsFromUserInfoEndpoint = true;
 
                 options.SaveTokens = true;
