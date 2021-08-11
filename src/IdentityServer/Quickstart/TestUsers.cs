@@ -22,7 +22,7 @@ namespace IdentityServerHost.Quickstart.UI
                     street_address = "One Hacker Way",
                     locality = "Heidelberg",
                     postal_code = 69118,
-                    country = "Germany"
+                    country = "USA"
                 };
                 
                 return new List<TestUser>
@@ -30,16 +30,16 @@ namespace IdentityServerHost.Quickstart.UI
                     new TestUser
                     {
                         SubjectId = "818727",
-                        Username = "alice",
-                        Password = "alice",
+                        Username = "Cubelaster",
+                        Password = "Cubelaster",
                         Claims =
                         {
-                            new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Alice"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
+                            new Claim(JwtClaimTypes.Name, "Cubelaster"),
+                            new Claim(JwtClaimTypes.GivenName, "Cubelaster"),
+                            new Claim(JwtClaimTypes.FamilyName, "Cubelaster"),
+                            new Claim(JwtClaimTypes.Email, "Cubelaster@cubelaster.com"),
                             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                            new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                            new Claim(JwtClaimTypes.WebSite, "https://github.com/Cubelaster"),
                             new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json)
                         }
                     },
