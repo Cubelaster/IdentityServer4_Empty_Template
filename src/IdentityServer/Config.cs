@@ -10,6 +10,12 @@ namespace IdentityServer
 {
     public static class Config
     {
+        static IdentityResource customProfile = new IdentityResource(
+            name: "custom.profile",
+            displayName: "Custom profile",
+            userClaims: new List<string> { "name", "email", "status" }
+        );
+
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
@@ -18,11 +24,21 @@ namespace IdentityServer
                 new IdentityResources.Email(),
                 new IdentityResources.Phone(),
                 new IdentityResources.Address(),
+                new IdentityResource("Kita", "Kita", new  string[] { "kita" }),
+                customProfile,
+                new IdentityResource("custom_claims", "User claims(s)",
+                    new List<string> {
+                        "full_name",
+                        "dummy"
+                    })
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
-            { new ApiScope("api1", "My API") };
+            {
+                new ApiScope("api1", "My API"),
+                //new ApiScope("custom_claims", "User claims(s)")
+            };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -62,7 +78,11 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        IdentityServerConstants.StandardScopes.Address,
+                        "api1",
+                        "custom_claims",
+                        "custom.profile",
+                        "Kita"
                     }
                 }
             };

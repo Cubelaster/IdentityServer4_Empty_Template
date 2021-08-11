@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ namespace MVC
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }
@@ -38,8 +40,15 @@ namespace MVC
                 options.ResponseType = "code";
 
                 options.Scope.Add("profile");
+                options.Scope.Add("address");
                 options.Scope.Add("api1");
                 options.Scope.Add("offline_access");
+                options.Scope.Add("custom_claims");
+                options.Scope.Add("custom.profile");
+                options.Scope.Add("Kita");
+                options.ClaimActions.MapUniqueJsonKey("custom_claims", "custom_claims");
+                options.ClaimActions.MapUniqueJsonKey("full_name", "full_name");
+                options.ClaimActions.MapUniqueJsonKey("kita", "kita");
                 options.GetClaimsFromUserInfoEndpoint = true;
 
                 options.SaveTokens = true;

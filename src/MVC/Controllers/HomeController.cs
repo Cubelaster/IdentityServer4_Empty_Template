@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVC.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Security.Claims;
+using IdentityModel.Client;
 
 namespace MVC.Controllers
 {
@@ -23,11 +26,6 @@ namespace MVC.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
@@ -52,6 +50,25 @@ namespace MVC.Controllers
             var content = await client.GetStringAsync("https://localhost:6001/api/identity");
 
             ViewBag.Json = JArray.Parse(content).ToString();
+            return View();
+        }
+
+        public async Task<IActionResult> Privacy()
+        {
+            var client = new HttpClient();
+            var metaDataResponse = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+            var response = await client.GetUserInfoAsync(new UserInfoRequest
+            {
+                Address = metaDataResponse.UserInfoEndpoint,
+                Token = accessToken
+            });
+            if (response.IsError)
+            {
+                throw new Exception("Problem while fetching data from the UserInfo endpoint", response.Exception);
+            }
+            var addressClaim = response.Claims.FirstOrDefault(c => c.Type.Equals("address"));
+            User.AddIdentity(new ClaimsIdentity(new List<Claim> { new Claim(addressClaim.Type.ToString(), addressClaim.Value.ToString()) }));
             return View();
         }
     }
