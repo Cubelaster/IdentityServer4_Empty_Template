@@ -55,6 +55,8 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Privacy()
         {
+            var bla = User.Claims.ToList();
+
             var client = new HttpClient();
             var metaDataResponse = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
             var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
@@ -68,7 +70,9 @@ namespace MVC.Controllers
                 throw new Exception("Problem while fetching data from the UserInfo endpoint", response.Exception);
             }
             var addressClaim = response.Claims.FirstOrDefault(c => c.Type.Equals("address"));
+            var mvc_scope = response.Claims.FirstOrDefault(c => c.Type.Equals("mvc_scope"));
             User.AddIdentity(new ClaimsIdentity(new List<Claim> { new Claim(addressClaim.Type.ToString(), addressClaim.Value.ToString()) }));
+            User.AddIdentity(new ClaimsIdentity(new List<Claim> { new Claim(mvc_scope.Type.ToString(), mvc_scope.Value.ToString()) }));
             return View();
         }
     }

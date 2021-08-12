@@ -43,10 +43,10 @@ namespace MVC
                 options.Scope.Add("address");
                 options.Scope.Add("api1");
                 options.Scope.Add("offline_access");
-                options.Scope.Add("custom_claims");
-                // For some reason, custom scopes don't work.
-                // I'm hoping this is related to TestUsers
-                //options.ClaimActions.MapUniqueJsonKey("custom_claims", "custom_claims");
+                options.Scope.Add("mvc_scope");
+
+                //options.ClaimActions.MapUniqueJsonKey("mvc_scope", "claims");
+
                 options.GetClaimsFromUserInfoEndpoint = true;
 
                 options.SaveTokens = true;

@@ -10,6 +10,11 @@ namespace IdentityServer
 {
     public static class Config
     {
+        static string[] customClaims = new[] {
+            "full_name",
+            "dummy"
+        };
+
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
@@ -18,18 +23,14 @@ namespace IdentityServer
                 new IdentityResources.Email(),
                 new IdentityResources.Phone(),
                 new IdentityResources.Address(),
-                new IdentityResource("custom_claims", "User claims(s)",
-                    new List<string> {
-                        "full_name",
-                        "dummy"
-                    })
+                new IdentityResource("custom_claims", "User claims(s)", customClaims)
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
                 new ApiScope("api1", "My API"),
-                //new ApiScope("custom_claims", "User claims(s)")
+                new ApiScope("mvc_scope", "User claims(s) for MVC", customClaims)
             };
 
         public static IEnumerable<Client> Clients =>
@@ -72,7 +73,7 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
                         "api1",
-                        "custom_claims",
+                        "mvc_scope",
                     }
                 }
             };
