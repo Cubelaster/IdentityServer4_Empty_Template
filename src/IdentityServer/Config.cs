@@ -10,12 +10,6 @@ namespace IdentityServer
 {
     public static class Config
     {
-        static IdentityResource customProfile = new IdentityResource(
-            name: "custom.profile",
-            displayName: "Custom profile",
-            userClaims: new List<string> { "name", "email", "status" }
-        );
-
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
@@ -24,8 +18,6 @@ namespace IdentityServer
                 new IdentityResources.Email(),
                 new IdentityResources.Phone(),
                 new IdentityResources.Address(),
-                new IdentityResource("Kita", "Kita", new  string[] { "kita" }),
-                customProfile,
                 new IdentityResource("custom_claims", "User claims(s)",
                     new List<string> {
                         "full_name",
@@ -81,8 +73,6 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Address,
                         "api1",
                         "custom_claims",
-                        "custom.profile",
-                        "Kita"
                     }
                 }
             };

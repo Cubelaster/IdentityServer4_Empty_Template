@@ -44,11 +44,9 @@ namespace MVC
                 options.Scope.Add("api1");
                 options.Scope.Add("offline_access");
                 options.Scope.Add("custom_claims");
-                options.Scope.Add("custom.profile");
-                options.Scope.Add("Kita");
-                options.ClaimActions.MapUniqueJsonKey("custom_claims", "custom_claims");
-                options.ClaimActions.MapUniqueJsonKey("full_name", "full_name");
-                options.ClaimActions.MapUniqueJsonKey("kita", "kita");
+                // For some reason, custom scopes don't work.
+                // I'm hoping this is related to TestUsers
+                //options.ClaimActions.MapUniqueJsonKey("custom_claims", "custom_claims");
                 options.GetClaimsFromUserInfoEndpoint = true;
 
                 options.SaveTokens = true;
